@@ -3,16 +3,16 @@ from wtforms import StringField, IntegerField, validators
 
 class PokemonForm(FlaskForm):
     name = StringField("Name", [validators.Length(min=3)])
-    cp = IntegerField("CP")
-    iv = IntegerField("IV")
+    cp = IntegerField("CP", [validators.NumberRange(min=0, max=100)])
+    iv = IntegerField("IV", [validators.NumberRange(min=0, max=100)])
  
     class Meta:
         csrf = False
 
 class PokemonUpdateForm(FlaskForm):
     name = StringField("Name", [validators.Length(min=3)])
-    cp = IntegerField("CP")
-    iv = IntegerField("IV")
+    cp = IntegerField("CP", [validators.NumberRange(min=10, max=4500)])
+    iv = IntegerField("IV", [validators.NumberRange(min=0, max=100)])
 
     class Meta:
         csrf = False

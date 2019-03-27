@@ -6,9 +6,19 @@
   </head>
 
   <body>
+    {% if current_user.is_authenticated %}
+    <p>
+	    Logged in: {{ current_user.name }}. <a href="{{ url_for('auth_logout') }}">Log Out</a>
+    </p>
+    </p>
+    {% else %}
+      <a href="{{ url_for('auth_login') }}">Log In</a>
+    {% endif %}
+
     <ul>
-      <li><a href="{{ url_for('pokemon_index') }}">Pokemon List</a></li>
+      <li><a href="{{ url_for('index') }}">Pokemon List</a></li>
       <li><a href="{{ url_for('pokemon_form') }}">Add a New Pokemon</a></li>
+      <li><a href="{{ url_for('account_form') }}">Sign In</a></li>
     </ul>
     
     {% block body %}

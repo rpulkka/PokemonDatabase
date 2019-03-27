@@ -10,6 +10,9 @@ class Pokemon(db.Model):
     cp = db.Column(db.Integer, nullable=False)
     iv = db.Column(db.Integer, nullable=False)
 
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'),
+                           nullable=False)
+
     def __init__(self, name, cp, iv):
         self.name = name
         self.cp = cp

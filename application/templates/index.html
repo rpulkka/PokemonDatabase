@@ -1,8 +1,30 @@
 {% extends "layout.html" %}
 
 {% block body %}
-  <p>
-    Pokemon Database
-  </p>
+  <table>
+    <tr>
+      <th>Pokemon</th>
+      <th>CP</th>
+      <th>IV</th>
+      <th>Trainer</th>
+    </tr>
+    {% for pokemon in pokemonlist %}
+    <tr>
+      <td>{{ pokemon.name }}</td>
+      <td>{{ pokemon.cp }}</td>
+      <td>{{ pokemon.iv }}</td>
+      <td>{{ account.get(pokemon.account_id).username }}</td>
+      <td>
+        <form method="GET" action="{{ url_for('pokemon_update_form', pokemon_id=pokemon.id) }}">
+          <input type="submit" value="Update"/>
+        </form>
+      </td>
+      <td>
+        <form method="POST" action="{{ url_for('pokemon_delete', pokemon_id=pokemon.id) }}">
+          <input type="submit" value="Delete"/>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
 {% endblock %}
-

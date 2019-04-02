@@ -10,7 +10,8 @@ from application.auth.models import User
 @app.route("/", methods=["GET"])
 def index():
     account = User.query
-    return render_template("index.html", pokemonlist = Pokemon.query.all(), account = account)
+    return render_template("index.html", pokemonlist = Pokemon.query.all(), account = account, 
+        highest_cp = Pokemon.find_highest_cp(), highest_iv = Pokemon.find_highest_iv())
 
 @app.route("/new_pokemon", methods=["GET"])
 @login_required

@@ -27,4 +27,22 @@
     </tr>
     {% endfor %}
   </table>
+  <br/>
+  Highest CP:
+  <ul>
+    {% for pokemon in highest_cp %}
+    <li>
+      {{pokemon.name}} {{pokemon.cp}} {{pokemon.iv}} {{pokemon.trainer}}
+    </li>
+    {% endfor %}
+  </ul>
+  <br/>
+  Highest IV:
+  <ul>
+    {% for pokemon in highest_iv %}
+    <li>
+      {{pokemon.name}} {{pokemon.cp}} {{pokemon.iv}} {{pokemon.trainer}}
+    </li>
+    {% endfor %}
+  </ul>
 {% endblock %}

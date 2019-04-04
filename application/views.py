@@ -3,14 +3,15 @@ from flask_login import login_required, current_user
 
 from application import app, db
 from application.models import Pokemon
+from application.auth.models import User
+from application.move.models import Move
 from application.forms import PokemonForm, AccountForm, PokemonUpdateForm
 
-from application.auth.models import User
 
 @app.route("/", methods=["GET"])
 def index():
     account = User.query
-    return render_template("index.html", pokemonlist = Pokemon.query.all(), account = account, 
+    return render_template("index.html", pokemonlist = Pokemon.query.all(), movelist = Move.query.all(), account = account, 
         highest_cp = Pokemon.find_highest_cp(), highest_iv = Pokemon.find_highest_iv())
 
 @app.route("/new_pokemon", methods=["GET"])
@@ -26,7 +27,7 @@ def pokemon_create():
     if not form.validate():
         return render_template("new_pokemon.html", form = form)
 
-    p = Pokemon(request.form.get("name"), int(request.form.get("cp")), int(request.form.get("iv")))
+    p = Pokemon(request.form.get("name"), int(request.form.get("cp")), int(request.form.get("iv")), int(request.form.get("fastMove_id")), int(request.form.get("chargeMove_id")))
     p.account_id = current_user.id
     db.session().add(p)
     db.session().commit()

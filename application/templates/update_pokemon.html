@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<p>Note: The moves of the pokemon are addressed by their id's for now. Check the id's from the front page and come back.
+  </p>
 <form method="POST" action="{{ url_for('pokemon_update', pokemon_id=pokemon.id) }}">
   <table>
     <tr>
@@ -32,6 +34,22 @@
       </td>
       <td>
         {{ form.iv }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.fastMove_id.label }}
+      </td>
+      <td>
+        {{ form.fastMove_id }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.chargeMove_id.label }}
+      </td>
+      <td>
+        {{ form.chargeMove_id }}
       </td>
     </tr>
     <tr>

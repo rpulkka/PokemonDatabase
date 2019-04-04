@@ -10,11 +10,20 @@ class Pokemon(Base):
 
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'),
                            nullable=False)
+    fastMove_id = db.Column(db.Integer, db.ForeignKey('move.id'),
+                           nullable=False)
+    chargeMove_id = db.Column(db.Integer, db.ForeignKey('move.id'),
+                           nullable=False)
 
-    def __init__(self, name, cp, iv):
+    company = db.relationship("Move", foreign_keys=[fastMove_id])
+    stakeholder = db.relationship("Move", foreign_keys=[chargeMove_id])
+
+    def __init__(self, name, cp, iv, fastMove_id, chargeMove_id):
         self.name = name
         self.cp = cp
         self.iv = iv
+        self.fastMove_id = fastMove_id
+        self.chargeMove_id = chargeMove_id
 
     @staticmethod
     def find_highest_cp():

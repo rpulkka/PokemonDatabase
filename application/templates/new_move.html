@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form method="POST" action="{{ url_for('move_create') }}">
+  <table>
+    <tr>
+      <td>
+        {{ form.name.label }}
+      </td>
+      <td>
+        {{ form.name }}
+      </td>
+      <td>
+        <ul>
+          {% for error in form.name.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.damage.label }}
+      </td>
+      <td>
+        {{ form.damage }}
+      </td>
+    </tr>
+    <tr>
+        <td>
+          {{ form.chargeMove.label }}
+        </td>
+        <td>
+          {{ form.chargeMove }}
+        </td>
+      </tr>
+    <tr>
+    <tr>
+        <td>
+          {{ form.bars.label }}
+        </td>
+        <td>
+          {{ form.bars }}
+        </td>
+      </tr>
+    <tr>
+      <td colspan="2">
+        <input type="submit" value="Add a new move"/>
+      </td>
+    </tr>
+</form>
+{% endblock %}

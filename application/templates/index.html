@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<p>Note: Only the moves that have been added to the database can be used on new pokemon. If you wish to use add other moves on new pokemon, add the moves
+  to the database before adding the pokemon.
+</p>
   <table>
     <tr>
       <th>Pokemon</th>
@@ -21,6 +24,35 @@
       </td>
       <td>
         <form method="POST" action="{{ url_for('pokemon_delete', pokemon_id=pokemon.id) }}">
+          <input type="submit" value="Delete"/>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  <br/>
+  <table>
+    <tr>
+      <th>Id</th>
+      <th>Move</th>
+      <th>Damage</th>
+      <th>Charged?</th>
+      <th>Bars</th>
+    </tr>
+    {% for move in movelist %}
+    <tr>
+      <td>{{ move.id }}</td>
+      <td>{{ move.name }}</td>
+      <td>{{ move.damage }}</td>
+      <td>{{ move.chargeMove }}</td>
+      <td>{{ move.bars }}</td>
+      <td>
+        <form method="GET" action="{{ url_for('move_update_form', move_id=move.id) }}">
+          <input type="submit" value="Update"/>
+        </form>
+      </td>
+      <td>
+        <form method="POST" action="{{ url_for('move_delete', move_id=move.id) }}">
           <input type="submit" value="Delete"/>
         </form>
       </td>

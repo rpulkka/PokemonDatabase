@@ -1,7 +1,7 @@
 from flask import redirect, render_template, request, url_for
-from flask_login import login_required, current_user
+from flask_login import current_user
 
-from application import app, db
+from application import app, db, login_required
 from application.models import Pokemon
 from application.auth.models import User
 from application.move.models import Move
@@ -15,12 +15,12 @@ def index():
         highest_cp = Pokemon.find_highest_cp(), highest_iv = Pokemon.find_highest_iv())
 
 @app.route("/new_pokemon", methods=["GET"])
-@login_required
+@login_required(role="USER")
 def pokemon_form():
     return render_template("new_pokemon.html", form = PokemonForm())
 
 @app.route("/new_pokemon", methods=["POST"])
-@login_required
+@login_required(role="USER")
 def pokemon_create():
     form = PokemonForm(request.form)
 
@@ -34,13 +34,13 @@ def pokemon_create():
     return redirect(url_for("index"))
 
 @app.route("/update_pokemon/<pokemon_id>", methods=["GET"])
-@login_required
+@login_required(role="USER")
 def pokemon_update_form(pokemon_id):
     pokemon = Pokemon.query.get(pokemon_id)
     return render_template("update_pokemon.html", form = PokemonUpdateForm(), pokemon = pokemon)
 
 @app.route("/update_pokemon/<pokemon_id>", methods=["POST"])
-@login_required
+@login_required(role="USER")
 def pokemon_update(pokemon_id):
     form = PokemonUpdateForm(request.form)
 
@@ -56,7 +56,7 @@ def pokemon_update(pokemon_id):
     return redirect(url_for("index"))
 
 @app.route("/delete_pokemon/<pokemon_id>/", methods=["POST"])
-@login_required
+@login_required(role="USER")
 def pokemon_delete(pokemon_id):
     Pokemon.query.filter_by(id=pokemon_id).delete()
     db.session().commit()

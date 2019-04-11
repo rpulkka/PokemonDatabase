@@ -8,4 +8,5 @@ salasana 'Ketchum'.
 [Aihemäärittely](https://github.com/rpulkka/PokemonDatabase/blob/master/documentation/aihemaarittely.md)<br/>
 [Tietokantakaavio](https://github.com/rpulkka/PokemonDatabase/blob/master/documentation/tietokantakaavio.md)<br/>
 [Käyttötapaukset](https://github.com/rpulkka/PokemonDatabase/blob/master/documentation/kayttotapaukset.md)<br/>
+[Käyttöohjeet](https://github.com/rpulkka/PokemonDatabase/blob/master/documentation/kayttoohjeet.md)<br/>
 [Asennusohje](https://github.com/rpulkka/PokemonDatabase/blob/master/documentation/asennusohje.md)<br/>

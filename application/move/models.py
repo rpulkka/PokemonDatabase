@@ -1,10 +1,6 @@
 from application import db
 from application.abstractModels import Base
-<<<<<<< HEAD
 from sqlalchemy.sql import text
-=======
-
->>>>>>> dca1f046d8b282fe1782942a926284ad13140f9c
 
 class Move(Base):
 
@@ -14,11 +10,7 @@ class Move(Base):
     damage = db.Column(db.Integer, nullable=False)
     chargeMove = db.Column(db.Boolean, nullable=False)
     bars = db.Column(db.Integer, nullable=True)
-<<<<<<< HEAD
     
-=======
-
->>>>>>> dca1f046d8b282fe1782942a926284ad13140f9c
     def __init__(self, name, damage, chargeMove, bars):
         self.name = name
         self.damage = damage
@@ -35,12 +27,9 @@ class Move(Base):
         return False
 
     def is_authenticated(self):
-<<<<<<< HEAD
         return True
 
     def destructor(self):
         stmt = text("delete from pokemon where chargeMove_id =:x or fastMove_id =:x;").params(x = self.id)
         db.engine.execute(stmt)
-=======
->>>>>>> dca1f046d8b282fe1782942a926284ad13140f9c
         return True

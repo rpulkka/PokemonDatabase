@@ -62,8 +62,11 @@ def move_update(move_id):
 @app.route("/delete_move/<move_id>/", methods=["POST"])
 @login_required(role="USER")
 def move_delete(move_id):
+<<<<<<< HEAD
     m = Move.query.get(move_id)
     m.destructor()
+=======
+>>>>>>> dca1f046d8b282fe1782942a926284ad13140f9c
     Move.query.filter_by(id=move_id).delete()
     db.session().commit()
     return redirect(url_for("index"))

@@ -15,8 +15,13 @@ class Pokemon(Base):
     chargeMove_id = db.Column(db.Integer, db.ForeignKey('move.id'),
                            nullable=False)
 
+<<<<<<< HEAD
     fastMove = db.relationship("Move", foreign_keys=[fastMove_id])
     chargeMove = db.relationship("Move", foreign_keys=[chargeMove_id])
+=======
+    company = db.relationship("Move", foreign_keys=[fastMove_id])
+    stakeholder = db.relationship("Move", foreign_keys=[chargeMove_id])
+>>>>>>> dca1f046d8b282fe1782942a926284ad13140f9c
 
     def __init__(self, name, cp, iv, fastMove_id, chargeMove_id):
         self.name = name

@@ -17,17 +17,37 @@ def index():
 @app.route("/new_pokemon", methods=["GET"])
 @login_required(role="USER")
 def pokemon_form():
-    return render_template("new_pokemon.html", form = PokemonForm())
+    fastlist = Move.allFastMoves()
+    chargelist = Move.allChargedMoves()
+
+    form = PokemonForm()
+
+    form.fastmove.choices = [(f.id, f.name) for f in fastlist]
+    form.chargemove.choices = [(c.id, c.name) for c in chargelist]
+
+    return render_template("new_pokemon.html", form = form)
 
 @app.route("/new_pokemon", methods=["POST"])
 @login_required(role="USER")
 def pokemon_create():
     form = PokemonForm(request.form)
 
+    fastlist = Move.allFastMoves()
+    chargelist = Move.allChargedMoves()
+
+    form.fastmove.choices = [(f.id, f.name) for f in fastlist]
+    form.chargemove.choices = [(c.id, c.name) for c in chargelist]
+
     if not form.validate():
         return render_template("new_pokemon.html", form = form)
 
-    p = Pokemon(request.form.get("name"), int(request.form.get("cp")), int(request.form.get("iv")), int(request.form.get("fastMove_id")), int(request.form.get("chargeMove_id")))
+    fastmove = request.form.get("fastmove")
+    chargemove = request.form.get("chargemove")
+
+    fastmove_id = fastmove[0]
+    chargemove_id = chargemove[0]
+
+    p = Pokemon(request.form.get("name"), int(request.form.get("cp")), int(request.form.get("iv")), fastmove_id, chargemove_id)
     p.account_id = current_user.id
     db.session().add(p)
     db.session().commit()
@@ -37,20 +57,43 @@ def pokemon_create():
 @login_required(role="USER")
 def pokemon_update_form(pokemon_id):
     pokemon = Pokemon.query.get(pokemon_id)
-    return render_template("update_pokemon.html", form = PokemonUpdateForm(), pokemon = pokemon)
+
+    fastlist = Move.allFastMoves()
+    chargelist = Move.allChargedMoves()
+
+    form = PokemonForm()
+
+    form.fastmove.choices = [(f.id, f.name) for f in fastlist]
+    form.chargemove.choices = [(c.id, c.name) for c in chargelist]
+
+    return render_template("update_pokemon.html", form = form, pokemon = pokemon)
 
 @app.route("/update_pokemon/<pokemon_id>", methods=["POST"])
 @login_required(role="USER")
 def pokemon_update(pokemon_id):
     form = PokemonUpdateForm(request.form)
 
+    fastlist = Move.allFastMoves()
+    chargelist = Move.allChargedMoves()
+
+    form.fastmove.choices = [(f.id, f.name) for f in fastlist]
+    form.chargemove.choices = [(c.id, c.name) for c in chargelist]
+
     if not form.validate():
         return render_template("update_pokemon.html", form = form)
+
+    fastmove = request.form.get("fastmove")
+    chargemove = request.form.get("chargemove")
+
+    fastmove_id = fastmove[0]
+    chargemove_id = chargemove[0]
 
     p = Pokemon.query.get(pokemon_id)
     p.name = request.form.get("name")
     p.cp = request.form.get("cp")
     p.iv = request.form.get("iv")
+    p.fastmove_id = fastmove_id
+    p.chargemove_id = chargemove_id
 
     db.session().commit()
     return redirect(url_for("index"))

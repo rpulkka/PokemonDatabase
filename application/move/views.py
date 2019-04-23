@@ -19,7 +19,7 @@ def move_create():
     if not form.validate():
         return render_template("new_move.html", form = form)
 
-    answer = request.form.get("chargeMove")
+    answer = request.form.get("chargemove")
 
     if answer is 'y':
         answer = True
@@ -53,7 +53,7 @@ def move_update(move_id):
     m = Move.query.get(move_id)
     m.name = request.form.get("name")
     m.damage = int(request.form.get("damage"))
-    m.chargeMove = answer
+    m.chargemove = answer
     m.bars = int(request.form.get("bars"))
 
     db.session().commit()

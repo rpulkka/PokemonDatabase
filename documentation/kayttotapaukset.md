@@ -5,13 +5,13 @@
 Jos käyttäjällä ei ole vielä tunnusta, hän klikkaa yläpalkista "Sign in", jolloin avautuu lomake. Lomakkeeseen kirjoitetaan uusi
 käyttäjätunnus sekä salasana, jonka jälkeen lomake lähetetään alla olevasta painikkeesta. 
 
-<h3>Sisäänkirjautuminen</3>
+<h3>Sisäänkirjautuminen</h3>
 
 Kun käyttäjällä on tunnukset, hän klikkaa yläpalkista "Log in" ja syöttää avautuneeseen lomakkeeseen käyttäjätunnuksen ja salasanan
 ja painaa alla olevaa lähetyspainiketta. Jos tunnukset ovat oikein, käyttäjä ohjataan etusivulle, jolloin hän pääsee käsiksi
 tietokannan muokkaamiseen. 
 
-<h3>Liikkeiden lisääminen</3>
+<h3>Liikkeiden lisääminen</h3>
 
 Käyttäjä haluaa lisätä uuden liikkeen tietokantaan. Tällöin hän valitsee yläpalkista linkin "Add a New Move" ja pääsee Moven
 lisäämiseen tarkoitettuun lomakkeeseen. Lomakkeeseen syötetään ensin nimi tekstikenttään ja liikkeen tuottama "vahinko" eli

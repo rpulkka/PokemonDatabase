@@ -5,7 +5,10 @@ from application import app, db, login_required
 from application.models import Pokemon
 from application.auth.models import User
 from application.move.models import Move
+from application.type.models import Type
 from application.forms import PokemonForm, AccountForm, PokemonUpdateForm
+import enum
+from sqlalchemy import Integer, Enum
 
 
 @app.route("/", methods=["GET"])
@@ -25,6 +28,9 @@ def pokemon_form():
     form.fastmove.choices = [(f.id, f.name) for f in fastlist]
     form.chargemove.choices = [(c.id, c.name) for c in chargelist]
 
+    form.firsttype.choices = [(t.value, t.name) for t in Type]
+    form.secondtype.choices = [(t.value, t.name) for t in Type]
+
     return render_template("new_pokemon.html", form = form)
 
 @app.route("/new_pokemon", methods=["POST"])
@@ -38,6 +44,9 @@ def pokemon_create():
     form.fastmove.choices = [(f.id, f.name) for f in fastlist]
     form.chargemove.choices = [(c.id, c.name) for c in chargelist]
 
+    form.firsttype.choices = [(t.value, t.name) for t in Type]
+    form.secondtype.choices = [(t.value, t.name) for t in Type]
+
     if not form.validate():
         return render_template("new_pokemon.html", form = form)
 
@@ -47,7 +56,10 @@ def pokemon_create():
     fastmove_id = fastmove[0]
     chargemove_id = chargemove[0]
 
-    p = Pokemon(request.form.get("name"), int(request.form.get("cp")), int(request.form.get("iv")), fastmove_id, chargemove_id)
+    firsttypenum = request.form.get("firsttype")
+    secondtypenum = request.form.get("secondtype")
+
+    p = Pokemon(request.form.get("name"), int(request.form.get("cp")), int(request.form.get("iv")), fastmove_id, chargemove_id, firsttypenum, secondtypenum)
     p.account_id = current_user.id
     db.session().add(p)
     db.session().commit()
@@ -66,6 +78,9 @@ def pokemon_update_form(pokemon_id):
     form.fastmove.choices = [(f.id, f.name) for f in fastlist]
     form.chargemove.choices = [(c.id, c.name) for c in chargelist]
 
+    form.firsttype.choices = [(t.value, t.name) for t in Type]
+    form.secondtype.choices = [(t.value, t.name) for t in Type]
+
     return render_template("update_pokemon.html", form = form, pokemon = pokemon)
 
 @app.route("/update_pokemon/<pokemon_id>", methods=["POST"])
@@ -79,6 +94,9 @@ def pokemon_update(pokemon_id):
     form.fastmove.choices = [(f.id, f.name) for f in fastlist]
     form.chargemove.choices = [(c.id, c.name) for c in chargelist]
 
+    form.firsttype.choices = [(t.value, t.name) for t in Type]
+    form.secondtype.choices = [(t.value, t.name) for t in Type]
+
     if not form.validate():
         return render_template("update_pokemon.html", form = form)
 
@@ -88,12 +106,17 @@ def pokemon_update(pokemon_id):
     fastmove_id = fastmove[0]
     chargemove_id = chargemove[0]
 
+    firsttypenum = request.form.get("firsttype")
+    secondtypenum = request.form.get("secondtype")
+
     p = Pokemon.query.get(pokemon_id)
     p.name = request.form.get("name")
     p.cp = request.form.get("cp")
     p.iv = request.form.get("iv")
     p.fastmove_id = fastmove_id
     p.chargemove_id = chargemove_id
+    p.first_type_id = firsttypenum
+    p.second_type_id = secondtypenum
 
     db.session().commit()
     return redirect(url_for("index"))

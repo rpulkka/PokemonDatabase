@@ -10,6 +10,10 @@
       <th>CP</th>
       <th>IV</th>
       <th>Trainer</th>
+      <th>Fast Move</th>
+      <th>Charge Move</th>
+      <th>Type 1</th>
+      <th>Type 2</th>
     </tr>
     {% for pokemon in pokemonlist %}
     <tr>
@@ -17,6 +21,10 @@
       <td>{{ pokemon.cp }}</td>
       <td>{{ pokemon.iv }}</td>
       <td>{{ account.get(pokemon.account_id).username }}</td>
+      <td>{{ pokemon.fast_move_name() }}</td>
+      <td>{{ pokemon.charge_move_name() }}</td>
+      <td>{{ pokemon.first_type_name() }}</td>
+      <td>{{ pokemon.second_type_name() }}</td>
       <td>
         <form method="GET" action="{{ url_for('pokemon_update_form', pokemon_id=pokemon.id) }}">
           <input type="submit" value="Update"/>

@@ -1,6 +1,9 @@
 from application import db
 from application.abstractModels import Base
+from application.type.models import Type
 from sqlalchemy.sql import text
+import enum
+from sqlalchemy import Integer, Enum
 
 class Move(Base):
 
@@ -10,6 +13,8 @@ class Move(Base):
     damage = db.Column(db.Integer, nullable=False)
     chargemove = db.Column(db.Boolean, nullable=False)
     bars = db.Column(db.Integer, nullable=True)
+
+    first_type = db.Column(db.Enum(Type))
     
     def __init__(self, name, damage, chargemove, bars):
         self.name = name
@@ -36,32 +41,25 @@ class Move(Base):
         return target
 
     @staticmethod
+    def getNameById(targetId):
+        stmt = text("select * from move where id=:x;").params(x = targetId)
+        res = db.engine.execute(stmt)
+        target = [row for row in res]
+        targetnames = [(row.name) for row in target]
+        return targetnames[0]
+
+    @staticmethod
     def allFastMoves():
         stmt = text("select * from move where chargemove = 0;")
         res = db.engine.execute(stmt)
-
-        #allFast = []
-        #for row in res:
-        #    allFast.append((row[0], row[1]))
-
         allFast = [row for row in res]
-
         return allFast
 
     @staticmethod
     def allChargedMoves():
         stmt = text("select * from move where chargemove = 1;")
         res = db.engine.execute(stmt)
-
-        #allCharged = []
-        #for row in res:
-        #    allCharged.append((row[0], row[1]))
-
         allCharged = [row for row in res]
-
-        #for move in allCharged:
-        #    print(move)
-
         return allCharged
 
     def destructor(self):

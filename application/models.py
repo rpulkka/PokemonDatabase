@@ -56,8 +56,40 @@ class Pokemon(Base):
             response.append({"name":row[3], "cp":row[4], "iv":row[5], "trainer":row[6]})
         return response
 
-    @staticmethod
-    def most_common_move_of_trainer():
+    def most_common_move_of_trainer(current):
+
+        if current == -1:
+            return ""
+
+        stmt1 = text("SELECT fastmove_id FROM Pokemon, Account WHERE Pokemon.account_id =:x group by fastmove_id ORDER BY COUNT(*) desc limit 1;").params(x = current)
+        res1 = db.engine.execute(stmt1)
+
+        num1 = 1
+        for iter in res1:
+            num1 = iter[0]
+
+        stmt2 = text("SELECT chargemove_id FROM Pokemon, Account WHERE Pokemon.account_id =:x group by fastmove_id ORDER BY COUNT(*) desc limit 1;").params(x = current)
+        res2 = db.engine.execute(stmt2)
+
+        num2 = 1
+        for iter in res2:
+            num2 = iter[0]
+
+        num3 = 0
+
+        if num1 >= num2:
+            num3 = num1
+        else:
+            num3 = num2
+
+        stmt3 = text("SELECT name FROM Move WHERE Move.id =:x;").params(x = num3)
+        res3 = db.engine.execute(stmt3)
+
+        final = ""
+        for iter in res3:
+            final = iter[0]
+
+        return final
 
     def fast_move_name(self):
         movename = Move.getNameById(self.fastmove_id)

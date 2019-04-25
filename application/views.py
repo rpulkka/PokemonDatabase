@@ -14,8 +14,9 @@ from sqlalchemy import Integer, Enum
 @app.route("/", methods=["GET"])
 def index():
     account = User.query
-    return render_template("index.html", pokemonlist = Pokemon.query.all(), movelist = Move.query.all(), account = account, 
-        highest_cp = Pokemon.find_highest_cp(), highest_iv = Pokemon.find_highest_iv())
+
+    return render_template("index.html", pokemonlist = Pokemon.query.all(), movelist = Move.query.all(), account = account,
+        highest_cp = Pokemon.find_highest_cp(), highest_iv = Pokemon.find_highest_iv(), commonmoves = Pokemon.most_common_move_of_trainer(1))
 
 @app.route("/new_pokemon", methods=["GET"])
 @login_required(role="USER")

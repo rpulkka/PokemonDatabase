@@ -2,22 +2,22 @@ import enum
 from sqlalchemy import Integer, Enum
 
 class Type(enum.Enum):
-    bug = 1
-    dark = 2
-    dragon = 3
-    electric = 4
-    fairy = 5
-    fighting = 6
-    fire = 7
-    flying = 8
-    ghost = 9
-    grass = 10
-    ground = 11
-    ice = 12
-    normal = 13
-    poison = 14
-    psychic = 15
-    rock = 16
-    steel = 17
-    water = 18
-    none = 19
+    Empty = 1
+    Bug = 2
+    Dark = 3
+    Dragon = 4
+    Electric = 5
+    Fairy = 6
+    Fighting = 7
+    Fire = 8
+    Flying = 9
+    Ghost = 10
+    Grass = 11
+    Ground = 12
+    Ice = 13
+    Normal = 14
+    Poison = 15
+    Psychic = 16
+    Rock = 17
+    Steel = 18
+    Water = 19

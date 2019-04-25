@@ -44,6 +44,8 @@ class Pokemon(Base):
             response.append({"name":row[3], "cp":row[4], "iv":row[5], "trainer":row[6]})
         return response
 
+    #USEFUL: select name from pokemon group by name order by count(*) desc limit 1;
+
     @staticmethod
     def find_highest_iv():
         stmt = text("select * from pokemon order by iv desc limit 1")
@@ -53,6 +55,9 @@ class Pokemon(Base):
         for row in res:
             response.append({"name":row[3], "cp":row[4], "iv":row[5], "trainer":row[6]})
         return response
+
+    @staticmethod
+    def most_common_move_of_trainer():
 
     def fast_move_name(self):
         movename = Move.getNameById(self.fastmove_id)

@@ -68,7 +68,7 @@ class Pokemon(Base):
         for iter in res1:
             num1 = iter[0]
 
-        stmt2 = text("SELECT chargemove_id FROM Pokemon, Account WHERE Pokemon.account_id =:x group by fastmove_id ORDER BY COUNT(*) desc limit 1;").params(x = current)
+        stmt2 = text("SELECT chargemove_id FROM Pokemon, Account WHERE Pokemon.account_id =:x group by chargemove_id ORDER BY COUNT(*) desc limit 1;").params(x = current)
         res2 = db.engine.execute(stmt2)
 
         num2 = 1

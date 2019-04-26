@@ -85,8 +85,10 @@
     </li>
     {% endfor %}
   </ul>
+  {% if current.is_authenticated: %}
   Most Common Move Of The Trainer
   <p>
     {{ commonmoves }}
   </p>
+  {% endif %}
 {% endblock %}

@@ -3,18 +3,28 @@ from flask import render_template, request, redirect, url_for
 from application import app, db, login_required
 from application.move.models import Move
 from application.move.forms import MoveForm, MoveUpdateForm
+from application.type.models import Type
+
+import enum
+from sqlalchemy import Integer, Enum
 
 from flask_login import current_user
 
 @app.route("/new_move", methods=["GET"])
 @login_required(role="USER")
 def move_form():
-    return render_template("new_move.html", form = MoveForm())
+    form = MoveForm()
+
+    form.firsttype.choices = [(t.value, t.name) for t in Type]
+
+    return render_template("new_move.html", form = form)
 
 @app.route("/new_move", methods=["POST"])
 @login_required(role="USER")
 def move_create():
     form = MoveForm(request.form)
+
+    form.firsttype.choices = [(t.value, t.name) for t in Type]
 
     if not form.validate():
         return render_template("new_move.html", form = form)
@@ -26,7 +36,9 @@ def move_create():
     else:
         answer = False
 
-    m = Move(request.form.get("name"), int(request.form.get("damage")), answer, int(request.form.get("bars")))
+    firsttypenum = request.form.get("firsttype")
+
+    m = Move(request.form.get("name"), int(request.form.get("damage")), answer, int(request.form.get("bars")), firsttypenum)
     db.session().add(m)
     db.session().commit()
     return redirect(url_for("index"))
@@ -35,12 +47,16 @@ def move_create():
 @login_required(role="USER")
 def move_update_form(move_id):
     move = Move.query.get(move_id)
-    return render_template("update_move.html", form = MoveUpdateForm(), move = move)
+    form = MoveUpdateForm()
+    form.firsttype.choices = [(t.value, t.name) for t in Type]
+    return render_template("update_move.html", form = form, move = move)
 
 @app.route("/update_move/<move_id>", methods=["POST"])
 @login_required(role="USER")
 def move_update(move_id):
     form = MoveUpdateForm(request.form)
+
+    form.firsttype.choices = [(t.value, t.name) for t in Type]
 
     if not form.validate():
         return render_template("update_move.html", form = form)
@@ -50,11 +66,14 @@ def move_update(move_id):
     else:
         answer = False
 
+    firsttypenum = request.form.get("firsttype")
+
     m = Move.query.get(move_id)
     m.name = request.form.get("name")
     m.damage = int(request.form.get("damage"))
     m.chargemove = answer
     m.bars = int(request.form.get("bars"))
+    m.first_type_id = firsttypenum
 
     db.session().commit()
     return redirect(url_for("index"))

@@ -13,14 +13,14 @@ class Move(Base):
     damage = db.Column(db.Integer, nullable=False)
     chargemove = db.Column(db.Boolean, nullable=False)
     bars = db.Column(db.Integer, nullable=True)
-
-    first_type = db.Column(db.Enum(Type))
+    first_type_id = db.Column(db.Integer, nullable=False)
     
-    def __init__(self, name, damage, chargemove, bars):
+    def __init__(self, name, damage, chargemove, bars, first_type_id):
         self.name = name
         self.damage = damage
         self.chargemove = chargemove
         self.bars = bars
+        self.first_type_id = first_type_id
   
     def get_id(self):
         return self.id

@@ -31,14 +31,14 @@ def move_create():
 
     answer = request.form.get("chargemove")
 
-    if answer is 'y':
-        answer = True
-    else:
-        answer = False
+    #if answer is 'y':
+    #    answer = True
+    #else:
+    #    answer = False
 
     firsttypenum = request.form.get("firsttype")
 
-    m = Move(request.form.get("name"), int(request.form.get("damage")), answer, int(request.form.get("bars")), firsttypenum)
+    m = Move(request.form.get("name"), int(request.form.get("damage")), int(request.form.get("chargemove")), int(request.form.get("bars")), firsttypenum)
     db.session().add(m)
     db.session().commit()
     return redirect(url_for("index"))
@@ -61,17 +61,17 @@ def move_update(move_id):
     if not form.validate():
         return render_template("update_move.html", form = form)
 
-    if answer is 'y':
-        answer = True
-    else:
-        answer = False
+    #if answer is 'y':
+    #    answer = True
+    #else:
+    #    answer = False
 
     firsttypenum = request.form.get("firsttype")
 
     m = Move.query.get(move_id)
     m.name = request.form.get("name")
     m.damage = int(request.form.get("damage"))
-    m.chargemove = answer
+    m.chargemove = int(request.form.get("chargemove"))
     m.bars = int(request.form.get("bars"))
     m.first_type_id = firsttypenum
 

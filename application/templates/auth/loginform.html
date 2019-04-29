@@ -2,8 +2,9 @@
 
 {% block body %}
 {{ error }}
+Enter your username and password. If you are a new user, select "Sign In" from the top of the screen. <br/><br/>
 <form method="POST" action="{{ url_for('auth_login') }}">
-  <table>
+  <table class="table table-striped table-light bg-warning">
     <tr>
       <td>
 	{{ form.username.label }}
@@ -35,8 +36,8 @@
       </td>
     </tr>
     <tr>
-      <td colspan="2">
-	<input type="submit" value="Login"/>
+      <td colspan="3">
+	      <input type="submit" value="Login"/>
       </td>
     </tr>
 </form>

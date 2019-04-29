@@ -2,7 +2,7 @@
 
 {% block body %}
 <form method="POST" action="{{ url_for('pokemon_create') }}">
-  <table>
+  <table class="table table-striped table-light bg-warning">
     <tr>
       <td>
         {{ form.name.label }}

@@ -11,7 +11,7 @@ class Move(Base):
 
     name = db.Column(db.String(144), nullable=False)
     damage = db.Column(db.Integer, nullable=False)
-    chargemove = db.Column(db.Boolean, nullable=False)
+    chargemove = db.Column(db.Integer, nullable=False)
     bars = db.Column(db.Integer, nullable=True)
     first_type_id = db.Column(db.Integer, nullable=False)
     
@@ -61,6 +61,16 @@ class Move(Base):
         res = db.engine.execute(stmt)
         allCharged = [row for row in res]
         return allCharged
+
+    def first_type_name(self):
+        typename = Type(self.first_type_id).name
+        return typename
+
+    def isChargeMoveBoolean(self):
+        if self.chargemove == 1:
+            return True
+        else:
+            return False
 
     def destructor(self):
         stmt = text("delete from pokemon where chargemove_id =:x or fastmove_id =:x;").params(x = self.id)

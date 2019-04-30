@@ -8,6 +8,9 @@
         {{ form.name.label }}
       </td>
       <td>
+        The name of the move, between 3 and 15 in length.
+      </td>
+      <td>
         {{ form.name }}
       </td>
       <td>
@@ -23,9 +26,17 @@
         {{ form.damage.label }}
       </td>
       <td>
+        The damage (power) of the move per bar (for charge moves) or per click (for fast moves), an integer between 1 and 300.
+      </td>
+      <td>
         {{ form.damage }}
       </td>
       <td>
+        <ul>
+          {% for error in form.damage.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
       </td>
     </tr>
     <tr>
@@ -33,9 +44,17 @@
           {{ form.chargemove.label }}
         </td>
         <td>
+          Insert 1 if the move is a charge move, insert 0 if the move is a fast move.
+        </td>
+        <td>
           {{ form.chargemove }}
         </td>
         <td>
+          <ul>
+            {% for error in form.chargemove.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
         </td>
       </tr>
     <tr>
@@ -44,9 +63,17 @@
           {{ form.bars.label }}
         </td>
         <td>
+          Insert 0, if the move is a fast move. Else, choose the number of bars for the charge move. An integer between 0 and 8.
+        </td>
+        <td>
           {{ form.bars }}
         </td>
         <td>
+          <ul>
+            {% for error in form.bars.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
         </td>
       </tr>
     <tr>
@@ -55,13 +82,21 @@
           {{ form.firsttype.label }}
         </td>
         <td>
+          Select the type of the move from the list.
+        </td>
+        <td>
           {{ form.firsttype }}
         </td>
         <td>
+          <ul>
+            {% for error in form.firsttype.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
         </td>
     </tr>
     <tr>  
-      <td colspan="3">
+      <td colspan="4">
         <input type="submit" value="Add a new move"/>
       </td>
     </tr>

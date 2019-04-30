@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table class="table table-striped table-light bg-warning">
+    <tr>
+      <td>
+        <b>Name</b>
+      </td>
+      <td>
+        The name of the move.
+      </td>
+      <td>
+        {{ move.name }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <b>Damage</b>
+      </td>
+      <td>
+        The damage (power) of the move per bar (for charge moves) or per click (for fast moves).
+      </td>
+      <td>
+        {{ move.damage }}
+      </td>
+    </tr>
+    <tr>
+        <td>
+          <b>Charge Move</b>
+        </td>
+        <td>
+          True, if the move is a charge move, false if the move is a fast move.
+        </td>
+        <td>
+          {{ move.isChargeMoveBoolean() }}
+        </td>
+      </tr>
+    <tr>
+    <tr>
+        <td>
+          <b>Bars</b>
+        </td>
+        <td>
+          The number of bars of the charge move. 0 for fast moves, because fast moves don't use bars. 
+        </td>
+        <td>
+          {{ move.bars }}
+        </td>
+      </tr>
+    <tr>
+    <tr>
+        <td>
+          <b>Type</b>
+        </td>
+        <td>
+          The type of the move.
+        </td>
+        <td>
+          {{ move.first_type_name() }}
+        </td>
+    </tr>
+{% endblock %}

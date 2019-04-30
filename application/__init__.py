@@ -53,8 +53,8 @@ def login_required(role="ANY"):
     return wrapper
 
 
-from application import models
-from application import views
+from application.pokemon import models
+from application.pokemon import views
 
 from application.auth import models
 from application.auth import views

@@ -2,11 +2,12 @@ from flask import redirect, render_template, request, url_for
 from flask_login import current_user
 
 from application import app, db, login_required
-from application.models import Pokemon
+from application.pokemon.models import Pokemon
 from application.auth.models import User
 from application.move.models import Move
 from application.type.models import Type
-from application.forms import PokemonForm, AccountForm, PokemonUpdateForm
+from application.pokemon.forms import PokemonForm, PokemonUpdateForm
+from application.auth.forms import AccountForm
 import enum
 from sqlalchemy import Integer, Enum
 
@@ -37,7 +38,7 @@ def pokemon_form():
     form.firsttype.choices = [(t.value, t.name) for t in Type]
     form.secondtype.choices = [(t.value, t.name) for t in Type]
 
-    return render_template("new_pokemon.html", form = form)
+    return render_template("pokemon/new_pokemon.html", form = form)
 
 @app.route("/new_pokemon", methods=["POST"])
 @login_required(role="USER")
@@ -54,7 +55,7 @@ def pokemon_create():
     form.secondtype.choices = [(t.value, t.name) for t in Type]
 
     if not form.validate():
-        return render_template("new_pokemon.html", form = form)
+        return render_template("pokemon/new_pokemon.html", form = form)
 
     fastmove = request.form.get("fastmove")
     chargemove = request.form.get("chargemove")
@@ -70,6 +71,11 @@ def pokemon_create():
     db.session().add(p)
     db.session().commit()
     return redirect(url_for("index"))
+
+@app.route("/pokemon/<pokemon_id>", methods=["GET"])
+def pokemon_view(pokemon_id):
+    pokemon = Pokemon.query.get(pokemon_id)
+    return render_template("pokemon/view_pokemon.html", pokemon = pokemon)
 
 @app.route("/update_pokemon/<pokemon_id>", methods=["GET"])
 @login_required(role="USER")
@@ -87,7 +93,7 @@ def pokemon_update_form(pokemon_id):
     form.firsttype.choices = [(t.value, t.name) for t in Type]
     form.secondtype.choices = [(t.value, t.name) for t in Type]
 
-    return render_template("update_pokemon.html", form = form, pokemon = pokemon)
+    return render_template("pokemon/update_pokemon.html", form = form, pokemon = pokemon)
 
 @app.route("/update_pokemon/<pokemon_id>", methods=["POST"])
 @login_required(role="USER")
@@ -104,7 +110,7 @@ def pokemon_update(pokemon_id):
     form.secondtype.choices = [(t.value, t.name) for t in Type]
 
     if not form.validate():
-        return render_template("update_pokemon.html", form = form)
+        return render_template("pokemon/update_pokemon.html", form = form)
 
     fastmove = request.form.get("fastmove")
     chargemove = request.form.get("chargemove")
@@ -133,20 +139,3 @@ def pokemon_delete(pokemon_id):
     Pokemon.query.filter_by(id=pokemon_id).delete()
     db.session().commit()
     return redirect(url_for("index"))
-
-@app.route("/new_account/", methods=["GET"])
-def account_form():
-    return render_template("new_account.html", form = AccountForm())
-
-@app.route("/new_account", methods=["POST"])
-def account_create():
-    form = AccountForm(request.form)
-
-    if not form.validate():
-        return render_template("new_account.html", form = form)
-
-    u = User(request.form.get("username"), request.form.get("username"), request.form.get("password"))
-    db.session().add(u)
-    db.session().commit()
-    return redirect(url_for("index"))
-

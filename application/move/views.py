@@ -17,7 +17,7 @@ def move_form():
 
     form.firsttype.choices = [(t.value, t.name) for t in Type]
 
-    return render_template("new_move.html", form = form)
+    return render_template("move/new_move.html", form = form)
 
 @app.route("/new_move", methods=["POST"])
 @login_required(role="USER")
@@ -27,9 +27,9 @@ def move_create():
     form.firsttype.choices = [(t.value, t.name) for t in Type]
 
     if not form.validate():
-        return render_template("new_move.html", form = form)
+        return render_template("move/new_move.html", form = form)
 
-    answer = request.form.get("chargemove")
+    #answer = request.form.get("chargemove")
 
     #if answer is 'y':
     #    answer = True
@@ -43,13 +43,18 @@ def move_create():
     db.session().commit()
     return redirect(url_for("index"))
 
+@app.route("/move/<move_id>", methods=["GET"])
+def move_view(move_id):
+    move = Move.query.get(move_id)
+    return render_template("move/view_move.html", move = move)
+
 @app.route("/update_move/<move_id>", methods=["GET"])
 @login_required(role="USER")
 def move_update_form(move_id):
     move = Move.query.get(move_id)
     form = MoveUpdateForm()
     form.firsttype.choices = [(t.value, t.name) for t in Type]
-    return render_template("update_move.html", form = form, move = move)
+    return render_template("move/update_move.html", form = form, move = move)
 
 @app.route("/update_move/<move_id>", methods=["POST"])
 @login_required(role="USER")
@@ -59,7 +64,7 @@ def move_update(move_id):
     form.firsttype.choices = [(t.value, t.name) for t in Type]
 
     if not form.validate():
-        return render_template("update_move.html", form = form)
+        return render_template("move/update_move.html", form = form)
 
     #if answer is 'y':
     #    answer = True

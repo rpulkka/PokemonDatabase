@@ -59,4 +59,11 @@
           {{ move.first_type_name() }}
         </td>
     </tr>
+    <tr>
+       <td colspan="3">
+        <form method="GET" action="{{ url_for('index') }}">
+          <input type="submit" value="Back to Front Page"/>
+        </form>
+      </td>
+    </tr>
 {% endblock %}

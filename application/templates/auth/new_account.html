@@ -28,7 +28,22 @@ Write down the username and password for the new account. If you already have an
       </td>
       <td>
         <ul>
-          {% for error in form.username.errors %}
+          {% for error in form.password.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.confirm.label }}
+      </td>
+      <td>
+        {{ form.confirm }}
+      </td>
+      <td>
+        <ul>
+          {% for error in form.confirm.errors %}
           <li>{{ error }}</li>
           {% endfor %}
         </ul>

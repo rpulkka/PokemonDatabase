@@ -3,7 +3,8 @@ from wtforms import PasswordField, StringField, validators
 
 class AccountForm(FlaskForm):
     username = StringField("Username", [validators.Length(min=3, max=25)])
-    password = StringField("Password", [validators.Length(min=3, max=25)])
+    password = PasswordField("Password", [validators.Length(min=3, max=25), validators.EqualTo('confirm', message='Passwords must match.')])
+    confirm = PasswordField("Password", [validators.Length(min=3, max=25)])
  
     class Meta:
         csrf = False

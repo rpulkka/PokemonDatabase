@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for
 
 from application import app, db, login_required
 from application.move.models import Move
-from application.move.forms import MoveForm, MoveUpdateForm
+from application.move.forms import MoveForm
 from application.type.models import Type
 
 import enum
@@ -52,14 +52,19 @@ def move_view(move_id):
 @login_required(role="USER")
 def move_update_form(move_id):
     move = Move.query.get(move_id)
-    form = MoveUpdateForm()
+    form = MoveForm()
+    form.name.data = move.name
+    form.damage.data = move.damage
+    form.chargemove.data = move.chargemove
+    form.bars.data = move.bars
     form.firsttype.choices = [(t.value, t.name) for t in Type]
+    form.firsttype.data = move.first_type_id
     return render_template("move/update_move.html", form = form, move = move)
 
 @app.route("/update_move/<move_id>", methods=["POST"])
 @login_required(role="USER")
 def move_update(move_id):
-    form = MoveUpdateForm(request.form)
+    form = MoveForm(request.form)
 
     form.firsttype.choices = [(t.value, t.name) for t in Type]
 

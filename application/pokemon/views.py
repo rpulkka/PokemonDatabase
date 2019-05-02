@@ -6,7 +6,7 @@ from application.pokemon.models import Pokemon
 from application.auth.models import User
 from application.move.models import Move
 from application.type.models import Type
-from application.pokemon.forms import PokemonForm, PokemonUpdateForm
+from application.pokemon.forms import PokemonForm
 from application.auth.forms import AccountForm
 import enum
 from sqlalchemy import Integer, Enum
@@ -87,18 +87,26 @@ def pokemon_update_form(pokemon_id):
 
     form = PokemonForm()
 
+    form.name.data = pokemon.name
+    form.cp.data = pokemon.cp
+    form.iv.data = pokemon.iv
+
     form.fastmove.choices = [(f.id, f.name) for f in fastlist]
+    form.fastmove.data = pokemon.fastmove_id
     form.chargemove.choices = [(c.id, c.name) for c in chargelist]
+    form.chargemove.data = pokemon.chargemove_id
 
     form.firsttype.choices = [(t.value, t.name) for t in Type]
+    form.firsttype.data = pokemon.first_type_id
     form.secondtype.choices = [(t.value, t.name) for t in Type]
+    form.secondtype.data = pokemon.second_type_id
 
     return render_template("pokemon/update_pokemon.html", form = form, pokemon = pokemon)
 
 @app.route("/update_pokemon/<pokemon_id>", methods=["POST"])
 @login_required(role="USER")
 def pokemon_update(pokemon_id):
-    form = PokemonUpdateForm(request.form)
+    form = PokemonForm(request.form)
 
     fastlist = Move.allFastMoves()
     chargelist = Move.allChargedMoves()

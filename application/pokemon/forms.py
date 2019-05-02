@@ -13,15 +13,3 @@ class PokemonForm(FlaskForm):
 
     class Meta:
         csrf = False
-
-class PokemonUpdateForm(FlaskForm):
-    name = StringField("Name", [validators.Length(min=3, max=15)])
-    cp = IntegerField("CP", [validators.NumberRange(min=10, max=4500)])
-    iv = IntegerField("IV", [validators.NumberRange(min=0, max=100)])
-    fastmove = SelectField("Fast Move", [validators.DataRequired()], coerce=int)
-    chargemove = SelectField("Charge Move", [validators.DataRequired()], coerce=int)
-    firsttype = SelectField("First Type", [validators.DataRequired()], coerce=int)
-    secondtype = SelectField("Second Type", [validators.DataRequired()], coerce=int)
-
-    class Meta:
-        csrf = False

@@ -1,5 +1,7 @@
 from application import db
 from application.abstractModels import Base
+from sqlalchemy import Table, Integer, ForeignKey
+
 
 class Stop(Base):
 

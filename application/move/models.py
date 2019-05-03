@@ -72,6 +72,20 @@ class Move(Base):
         else:
             return False
 
+    def canDelete(self, userid):
+        stmt = text("select * from pokemon where chargemove_id =:x or fastmove_id =:x;").params(x = self.id)
+        res = db.engine.execute(stmt)
+        
+        response = []
+        for row in res:
+            response.append(row[6])
+
+        for trainer in response:
+            if trainer != userid:
+                return False
+
+        return True
+
     def destructor(self):
         stmt = text("delete from pokemon where chargemove_id =:x or fastmove_id =:x;").params(x = self.id)
         db.engine.execute(stmt)

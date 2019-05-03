@@ -94,7 +94,10 @@ def move_update(move_id):
 @login_required(role="USER")
 def move_delete(move_id):
     m = Move.query.get(move_id)
-    m.destructor()
-    Move.query.filter_by(id=move_id).delete()
-    db.session().commit()
+
+    if m.canDelete(current_user.id):
+        m.destructor()
+        Move.query.filter_by(id=move_id).delete()
+        db.session().commit()
+
     return redirect(url_for("index"))

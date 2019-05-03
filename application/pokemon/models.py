@@ -108,3 +108,5 @@ class Pokemon(Base):
         return typename
 
 
+
+

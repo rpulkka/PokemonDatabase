@@ -11,7 +11,6 @@ from application.auth.forms import AccountForm
 import enum
 from sqlalchemy import Integer, Enum
 
-
 @app.route("/", methods=["GET"])
 def index():
     account = User.query
@@ -144,6 +143,10 @@ def pokemon_update(pokemon_id):
 @app.route("/delete_pokemon/<pokemon_id>/", methods=["POST"])
 @login_required(role="USER")
 def pokemon_delete(pokemon_id):
-    Pokemon.query.filter_by(id=pokemon_id).delete()
-    db.session().commit()
+    p = Pokemon.query.get(pokemon_id)
+
+    if p.account_id == current_user.id:
+        Pokemon.query.filter_by(id=pokemon_id).delete()
+        db.session().commit()
+    
     return redirect(url_for("index"))

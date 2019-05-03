@@ -52,7 +52,6 @@ def login_required(role="ANY"):
         return decorated_view
     return wrapper
 
-
 from application.pokemon import models
 from application.pokemon import views
 
@@ -61,6 +60,9 @@ from application.auth import views
 
 from application.move import models
 from application.move import views
+
+from application.stop import models
+from application.stop import views
 
 from application.auth.models import User
 

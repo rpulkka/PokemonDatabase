@@ -1,7 +1,6 @@
 from application import db
 from application.abstractModels import Base
 
-
 class User(Base):
 
     __tablename__ = "account"

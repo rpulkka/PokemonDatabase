@@ -1,6 +1,6 @@
 <h1>Käyttötapaukset</h1
   
-<h3>Käyttäjätunnuksen luominen</3>
+<h3>Käyttäjätunnuksen luominen</h3>
 
 Jos käyttäjällä ei ole vielä tunnusta, hän klikkaa yläpalkista "Sign in", jolloin avautuu lomake. Lomakkeeseen kirjoitetaan uusi
 käyttäjätunnus sekä salasana kahdesti, jonka jälkeen lomake lähetetään alla olevasta painikkeesta. 
@@ -89,7 +89,7 @@ käyttäjien pokemoneja.
 
 SQL: DELETE FROM move WHERE move.id = 2
 
-Rajoituksien toteutumista varten käytetään myös seuraavia kyselyitä.'
+Rajoituksien toteutumista varten käytetään myös seuraavia kyselyitä.
 
 SQL: SELECT name FROM Move WHERE Move.id =:x;
 

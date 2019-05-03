@@ -2,6 +2,7 @@ from application import db
 from application.abstractModels import Base
 from application.type.models import Type
 from application.move.models import Move
+from application.auth.models import User
 from sqlalchemy.sql import text
 import enum
 from sqlalchemy import Integer, Enum
@@ -43,8 +44,6 @@ class Pokemon(Base):
         for row in res:
             response.append({"name":row[3], "cp":row[4], "iv":row[5], "trainer":row[6]})
         return response
-
-    #USEFUL: select name from pokemon group by name order by count(*) desc limit 1;
 
     @staticmethod
     def find_highest_iv():
@@ -106,7 +105,3 @@ class Pokemon(Base):
     def second_type_name(self):
         typename = Type(self.second_type_id).name
         return typename
-
-
-
-
